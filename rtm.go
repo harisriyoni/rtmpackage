@@ -35,9 +35,9 @@ func GetDataJob(priority string, db *mongo.Database, col string) (data Job) {
 	return data
 }
 
-func DeleteDataJob(phone string, db *mongo.Database, col string) (data Job) {
+func DeleteDataJob(priority string, db *mongo.Database, col string) (data Job) {
 	user := db.Collection(col)
-	filter := bson.M{"priority": phone}
+	filter := bson.M{"priority": priority}
 	err, _ := user.DeleteOne(context.TODO(), filter)
 	if err != nil {
 		fmt.Printf("DeleteDataJob : %v\n", err)
