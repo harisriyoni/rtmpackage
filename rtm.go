@@ -34,10 +34,29 @@ func GetDataJob(priority string, db *mongo.Database, col string) (data Job) {
 	}
 	return data
 }
-
+func GetDataJobtitle(job_title string, db *mongo.Database, col string) (data Job) {
+	user := db.Collection(col)
+	filter := bson.M{"job_title": job_title}
+	err := user.FindOne(context.TODO(), filter).Decode(&data)
+	if err != nil {
+		fmt.Printf("getbypriority: %v\n", err)
+	}
+	return data
+}
 func DeleteDataJob(priority string, db *mongo.Database, col string) (data Job) {
 	user := db.Collection(col)
 	filter := bson.M{"priority": priority}
+	err, _ := user.DeleteOne(context.TODO(), filter)
+	if err != nil {
+		fmt.Printf("DeleteDataJob : %v\n", err)
+	}
+	fmt.Println("Succes Delete data")
+	return data
+}
+
+func DeleteDataJobtitle(job_title string, db *mongo.Database, col string) (data Job) {
+	user := db.Collection(col)
+	filter := bson.M{"job_title": job_title}
 	err, _ := user.DeleteOne(context.TODO(), filter)
 	if err != nil {
 		fmt.Printf("DeleteDataJob : %v\n", err)
